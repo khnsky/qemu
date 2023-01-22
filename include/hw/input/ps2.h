@@ -91,6 +91,8 @@ struct PS2MouseState {
     int mouse_dy;
     int mouse_dz;
     int mouse_dw;
+    int absolute_x;
+    int absolute_y;
     uint8_t mouse_buttons;
 };
 

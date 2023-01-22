@@ -529,11 +529,12 @@ void qemu_input_queue_rel(QemuConsole *src, InputAxis axis, int value)
 void qemu_input_queue_abs(QemuConsole *src, InputAxis axis, int value,
                           int min_in, int max_in)
 {
+    int max = 1000;
     InputMoveEvent move = {
         .axis = axis,
         .value = qemu_input_scale_axis(value, min_in, max_in,
                                        INPUT_EVENT_ABS_MIN,
-                                       INPUT_EVENT_ABS_MAX),
+                                       max),
     };
     InputEvent evt = {
         .type = INPUT_EVENT_KIND_ABS,

@@ -804,8 +804,24 @@ static void ps2_mouse_event(DeviceState *dev, QemuConsole *src,
         move = evt->u.rel.data;
         if (move->axis == INPUT_AXIS_X) {
             s->mouse_dx += move->value;
+            s->absolute_x += move->value;
         } else if (move->axis == INPUT_AXIS_Y) {
             s->mouse_dy -= move->value;
+            s->absolute_y -= move->value;
+        }
+        break;
+
+    case INPUT_EVENT_KIND_ABS:
+        move = evt->u.abs.data;
+        long value = move->value;
+        if (move->axis == INPUT_AXIS_X) {
+            int delta = value - s->absolute_x;
+            s->mouse_dx = delta;
+            s->absolute_x = value;
+        } else if (move->axis == INPUT_AXIS_Y) {
+            int delta = value - s->absolute_y;
+            s->mouse_dy = -delta;
+            s->absolute_y = value;
         }
         break;
 
@@ -1068,6 +1084,8 @@ static void ps2_mouse_reset(DeviceState *dev)
     s->mouse_dy = 0;
     s->mouse_dz = 0;
     s->mouse_dw = 0;
+    s->absolute_x = 0;
+    s->absolute_y = 0;
     s->mouse_buttons = 0;
 }
 
@@ -1208,6 +1226,8 @@ static const VMStateDescription vmstate_ps2_mouse = {
         VMSTATE_INT32(mouse_dx, PS2MouseState),
         VMSTATE_INT32(mouse_dy, PS2MouseState),
         VMSTATE_INT32(mouse_dz, PS2MouseState),
+        VMSTATE_INT32(absolute_x, PS2MouseState),
+        VMSTATE_INT32(absolute_y, PS2MouseState),
         VMSTATE_UINT8(mouse_buttons, PS2MouseState),
         VMSTATE_END_OF_LIST()
     }
@@ -1226,7 +1246,7 @@ static void ps2_kbd_realize(DeviceState *dev, Error **errp)
 
 static QemuInputHandler ps2_mouse_handler = {
     .name  = "QEMU PS/2 Mouse",
-    .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
+    .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL | INPUT_EVENT_MASK_ABS,
     .event = ps2_mouse_event,
     .sync  = ps2_mouse_sync,
 };
