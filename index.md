@@ -9,8 +9,7 @@ In the guide I will be using [Arch Linux](https://archlinux.org/) and be linking
 - [Installing PenPoint](#2-installing-penpoint)
 - [Building modfied QEMU](#3-building-modified-qemu)
 
-<details>
-  <summary><h1>1. Creating the VM</h1></summary>
+# 1. Creating the VM
 
 Download [FreeDOS 1.3 LiveCD](https://www.freedos.org/download/) and unzip it.
 ```
@@ -61,10 +60,8 @@ $ systemctl start libvirtd.service
 27. After installation finishes select 'Yes - Please reboot now' and press Enter.  ![](pictures/1674505889.png)
 
 Installation of FreeDOS is now complete, you can use `shutdown` command to power off.  ![](pictures/1674505927.png)
-</details>
 
-<details>
-  <summary><h1>2. Installing PenPoint</h1></summary>
+# 2. Installing PenPoint
   
 1. Download the [floppy images](floppies/) of PenPoint installation media. The files were obtained from [bitsavers.org](http://bitsavers.trailing-edge.com/bits/Go/PENPOINT_SDK/IMD/) and converted from .IMD to .img using [disk-utilities](https://github.com/keirf/disk-utilities).
 2. In the 'Show virtual hardware details' tab click 'Add hardware'.
@@ -99,10 +96,8 @@ Adding ';%PATH' at the end of 'PATH=...' makes so that programs included with Fr
 23. Navigate to 'C:\PENPOINT\SDK\UTIL\DOS' and run 'GO.BAT'.
 
 You now have running PenPoint OS (SDK). To exit PenPoint click 'Settings -> Power -> Manual shutdown'.
-</details>
 
-<details>
-  <summary><h1>3. Building modified QEMU</h1></summary>
+# 3. Building modified QEMU
   
 To build QEMU you will probably need to install some packages. One way to find out what packages you need is to look how QEMU in your distribution's repositories is being built. As I am using Arch Linux I looked what the [AUR](https://aur.archlinux.org/) (Arch User Repository) package for building QEMU from master - [qemu-git](https://aur.archlinux.org/packages/qemu-git) - especially its [PKGBUILD](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=qemu-git)
 
@@ -137,4 +132,3 @@ Use any editor you like by setting the `$EDITOR` environmental variable. The arg
 'virsh' performs some error cheking so that it will tell you if you made syntax errors in the configuration xml or if the QEMU binary lacks necessary features.
   
 You now have a virtual machine with PenPoint OS (SDK) installed in FreeDOS that uses a modified QEMU binary that allows to use a graphics tablet in PenPoint.
-</details>
