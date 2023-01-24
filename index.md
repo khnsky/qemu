@@ -7,6 +7,7 @@ In the guide I will be using [Arch Linux](https://archlinux.org/) and be linking
 # Table of Contents
 - [Creating the VM](#1-creating-the-vm)
 - [Installing PenPoint](#2-installing-penpoint)
+- [Building modfied QEMU](#3-building-modified-qemu)
 
 # 1. Creating the VM
 Download [FreeDOS 1.3 LiveCD](https://www.freedos.org/download/) and unzip it.
@@ -92,3 +93,39 @@ Adding ';%PATH' at the end of 'PATH=...' makes so that programs included with Fr
 23. Navigate to 'C:\PENPOINT\SDK\UTIL\DOS' and run 'GO.BAT'.
 
 You now have running PenPoint OS (SDK). To exit PenPoint click 'Settings -> Power -> Manual shutdown'.
+
+# 3. Building modified QEMU
+To build QEMU you will probably need to install some packages. One way to find out what packages you need is to look how QEMU in your distribution's repositories is being built. As I am using Arch Linux I looked what the [AUR](https://aur.archlinux.org/) (Arch User Repository) package for building QEMU from master - [qemu-git](https://aur.archlinux.org/packages/qemu-git) - especially its [PKGBUILD](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=qemu-git)
+
+1. Clone the repository for [modified QEMU](https://github.com/khnsky/qemu-penpointos):
+```
+$ git clone 'https://github.com/khnsky/qemu-penpointos.git'
+```
+2. Navigate to the cloned QEMU source directory, and create a build directory inside:
+```
+$ cd qemu-penpoint
+$ mkdir build
+$ cd build
+```
+3. Run the configure script:
+```
+$ ../configure --target-list=x86_64-softmmu --disable-werror
+```
+If configure script fails you might have some environmental variables like `$CFLAGS` set that interfere with it.  
+4. and run 'ninja' to build:
+```
+$ ninja
+```
+5. Use 'virsh' to edit the configuration of the virtual machine so that it uses the freshly built modified QEMU.
+```
+$ sudo EDITOR=nvim virsh edit --domain PenPointOS
+```
+Use any editor you like by setting the `$EDITOR` environmental variable. The argument to `--domain` is the name of the virtual machine.  
+6. Find the '<emulator>' element and change its value to the path of the new binary.
+```xml
+    <emulator>/home/khnsky/code/penpoint/qemu-penpointos/build/qemu-system-x86_64</emulator>
+```
+'virsh' performs some error cheking so that it will tell you if you made syntax errors in the configuration xml or if the QEMU binary lacks necessary features.
+  
+You now have a virtual machine with PenPoint OS (SDK) installed in FreeDOS that uses a modified QEMU binary that allows to use a graphics tablet in PenPoint.
+
