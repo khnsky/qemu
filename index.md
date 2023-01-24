@@ -83,6 +83,7 @@ SET LIB=C:\PENPOINT\SDK\LIB
 SET PENPOINT_PATH=C:\PENPOINT
 ```
 Adding ';%PATH' at the end of 'PATH=...' makes so that programs included with FreeDOS can still be used normally.
+
 18. Edit 'FDCONFIG.SYS' so that it looks like this:
 19. Remove 'AUTOEXEC.NEW' and 'CONFIG.SYS' using `del autoexec.new config.sys`.
 20. Reboot using `reboot`.
