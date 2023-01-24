@@ -6,6 +6,7 @@ In the guide I will be using [Arch Linux](https://archlinux.org/) and be linking
 
 # Table of Contents
 - [Creating the VM](#1-creating-the-vm)
+- [Installing PenPoint](#2-installing-penpoint)
 
 # 1. Creating the VM
 Download [FreeDOS 1.3 LiveCD](https://www.freedos.org/download/) and unzip it.
@@ -56,3 +57,37 @@ $ systemctl start libvirtd.service
 27. After installation finishes select 'Yes - Please reboot now' and press Enter.  ![](pictures/1674505889.png)
 
 Installation of FreeDOS is now complete, you can use `shutdown` command to power off.  ![](pictures/1674505927.png)
+
+# 2. Installing PenPoint
+1. Download the [floppy images](floppies/) of PenPoint installation media. The files were obtained from [bitsavers.org](http://bitsavers.trailing-edge.com/bits/Go/PENPOINT_SDK/IMD/) and converted from .IMD to .img using [disk-utilities](https://github.com/keirf/disk-utilities).
+2. In the 'Show virtual hardware details' tab click 'Add hardware'.
+3. In 'Storage' tab select 'Select or create custom storage' and choose 'Device type' to be 'Floppy device'. Confirm by clicking 'Finish'.
+4. Select 'Floppy 1' and click 'Browse' and 'Browse local' to find the first floppy image file. Confirm by clicking 'Apply'.
+5. Boot the VM.
+6. Navigate to the contents of the floppy by writing 'a:' and pressing Enter.
+7. Run 'install.exe'.
+8. An installation wizard will apear, press any keys (other than Esc) to proceed throuh it.
+9. Select 'Drive C:' as the location to install PenPoint (white background is the one selected).
+10. Press Enter to confirm the root directory to install PenPoint in.
+11. Press Enter to start installation.
+12. After first disk finishes installing a dialog will appear asking to insert next floppy drive. Go to the 'Show virtual hardware details tab' and in 'Floppy 1' set 'Source path' to location of the next disk, and click 'Apply'.
+13. Go back to the 'Show graphical console' tab and press any key (other than Esc) to continue installation from the next disk.
+14. Repeat for all 8 disks.
+15. After all 8 disks were installed a dialog about creation of AUTOEXEC.NEW file will appear, press any key to continue.
+16. After pressing keys to continue you will be dropped into command line in 'C:\PENPOINT', type 'cd ..' to go back to root.
+17. Using either 'edit' or 'vim' text editors modify file 'FDAUTO.BAT' to include lines from file 'AUTOEXEC.NEW' created by the install wizard
+```
+PATH=C:\PENPOINT\SDK\UTIL\DOS;%PATH%
+SET INCLUDE=.;C:\PENPOINT\SDK\INC
+SET LIB=C:\PENPOINT\SDK\LIB
+SET PENPOINT_PATH=C:\PENPOINT
+```
+Adding ';%PATH' at the end of 'PATH=...' makes so that programs included with FreeDOS can still be used normally.
+18. Edit 'FDCONFIG.SYS' so that it looks like this:
+19. Remove 'AUTOEXEC.NEW' and 'CONFIG.SYS' using `del autoexec.new config.sys`.
+20. Reboot using `reboot`.
+21. Navigate to 'C:\PENPOINT\BOOT' using `cd penpoint\boot`
+22. Open file 'MIL.INI' in text editor and uncomment line containing 'PS2Mouse=on' by deleting the leading '#'.
+23. Navigate to 'C:\PENPOINT\SDK\UTIL\DOS' and run 'GO.BAT'.
+
+You now have running PenPoint OS (SDK). To exit PenPoint click 'Settings -> Power -> Manual shutdown'.
