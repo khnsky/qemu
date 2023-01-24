@@ -9,7 +9,9 @@ In the guide I will be using [Arch Linux](https://archlinux.org/) and be linking
 - [Installing PenPoint](#2-installing-penpoint)
 - [Building modfied QEMU](#3-building-modified-qemu)
 
-# 1. Creating the VM
+<details>
+  <summary><h1>1. Creating the VM</h1></summary>
+
 Download [FreeDOS 1.3 LiveCD](https://www.freedos.org/download/) and unzip it.
 ```
 $ unzip FD13-LiveCD.zip
@@ -28,6 +30,7 @@ $ systemctl start libvirtd.service
 ```
 
 1. Start virt-manager. If 'QEMU/KVM' is grayed out double click to connect.  ![](pictures/1674502174.png)
+
 2. From the drop-down menu select 'File -> New Virtual Machine'.  
 3. Select 'Local install media' and click 'Forward'.  ![](pictures/1674499894.png)
 4. Select unzipped FD13LIVE.iso by clicking 'browse' -> 'Browse local'.
@@ -58,8 +61,11 @@ $ systemctl start libvirtd.service
 27. After installation finishes select 'Yes - Please reboot now' and press Enter.  ![](pictures/1674505889.png)
 
 Installation of FreeDOS is now complete, you can use `shutdown` command to power off.  ![](pictures/1674505927.png)
+</details>
 
-# 2. Installing PenPoint
+<details>
+  <summary><h1>2. Installing PenPoint</h1></summary>
+  
 1. Download the [floppy images](floppies/) of PenPoint installation media. The files were obtained from [bitsavers.org](http://bitsavers.trailing-edge.com/bits/Go/PENPOINT_SDK/IMD/) and converted from .IMD to .img using [disk-utilities](https://github.com/keirf/disk-utilities).
 2. In the 'Show virtual hardware details' tab click 'Add hardware'.
 3. In 'Storage' tab select 'Select or create custom storage' and choose 'Device type' to be 'Floppy device'. Confirm by clicking 'Finish'.
@@ -93,8 +99,11 @@ Adding ';%PATH' at the end of 'PATH=...' makes so that programs included with Fr
 23. Navigate to 'C:\PENPOINT\SDK\UTIL\DOS' and run 'GO.BAT'.
 
 You now have running PenPoint OS (SDK). To exit PenPoint click 'Settings -> Power -> Manual shutdown'.
+</details>
 
-# 3. Building modified QEMU
+<details>
+  <summary><h1>3. Building modified QEMU</h1></summary>
+  
 To build QEMU you will probably need to install some packages. One way to find out what packages you need is to look how QEMU in your distribution's repositories is being built. As I am using Arch Linux I looked what the [AUR](https://aur.archlinux.org/) (Arch User Repository) package for building QEMU from master - [qemu-git](https://aur.archlinux.org/packages/qemu-git) - especially its [PKGBUILD](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=qemu-git)
 
 1. Clone the repository for [modified QEMU](https://github.com/khnsky/qemu-penpointos):
@@ -128,4 +137,4 @@ Use any editor you like by setting the `$EDITOR` environmental variable. The arg
 'virsh' performs some error cheking so that it will tell you if you made syntax errors in the configuration xml or if the QEMU binary lacks necessary features.
   
 You now have a virtual machine with PenPoint OS (SDK) installed in FreeDOS that uses a modified QEMU binary that allows to use a graphics tablet in PenPoint.
-
+</details>
