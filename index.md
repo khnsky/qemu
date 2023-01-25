@@ -39,15 +39,15 @@ $ systemctl start libvirtd.service
 7. Set disk image size to 500MB and click 'Forward'.  
 ![](pictures/1674502883.png)
 8. Change name and select 'Customize configuration before install' and click 'Finish'.  ![](pictures/1674502961.png)
-9. In 'Boot Options' select 'Enable boot menu'.
-10. In 'NIC' click remove.  
+9. In 'Boot Options' select 'Enable boot menu'. ![](pictures/1674647037.png)
+10. In 'NIC' click remove. ![](pictures/1674647066.png)
 11. Click 'Begin installation'.  
 12. Using arrows select 'Install to harddisk' and press Enter.  ![](pictures/1674503909.png)
 13. Choose language and press Enter.  ![](pictures/1674503922.png)
 14. Select 'Yes - Continue with the installation' and press Enter.  ![](pictures/1674504774.png)
 15. Select 'Yes - Partition drive C:' and press Enter.  ![](pictures/1674503999.png)
 16. Select 'Yes - Please reboot now' and press Enter.  ![](pictures/1674504011.png)
-17. Unfortunately now the installation disk is ejected and the virtual machine cannot boot, from the drop-down menu select 'Virtual Machine -> Shutdown -> Force Off' and confirm by clicking 'Yes'.  
+17. For some reason the installation floppy is now ejected. Either FreeDOS instructs QEMU to do so or QEMU does so on its own. The floppy, however, is needed to boot and continue installation. QEMU will try to boot from harddisk but it will fail. To continue installation you need to turn off the virtual machine by force. To do select from the drop-down menu 'Virtual Machine -> Shutdown -> Force Off' and confirm by clicking 'Yes'.  
 18. In the 'Show virtual hardware details' tab the IDE CDROM 1 is empty, click 'Browse', select FD13LIVE.iso, and confirm by clicking 'Choose Volume'.   ![](pictures/1674504384.png)
 19. Click 'Apply' and power on the virtual machine by clikcing the triangle below 'Virtual Machine' menu button.
 20. Press Esc to access boot menu and press 3 to select DVD/CD (FD13-LiveCD)  ![](pictures/1674504640.png)
@@ -65,20 +65,20 @@ Installation of FreeDOS is now complete, you can use `shutdown` command to power
   
 1. Download the [floppy images](floppies/) of PenPoint installation media. The files were obtained from [bitsavers.org](http://bitsavers.trailing-edge.com/bits/Go/PENPOINT_SDK/IMD/) and converted from .IMD to .img using [disk-utilities](https://github.com/keirf/disk-utilities).
 2. In the 'Show virtual hardware details' tab click 'Add hardware'.
-3. In 'Storage' tab select 'Select or create custom storage' and choose 'Device type' to be 'Floppy device'. Confirm by clicking 'Finish'.
-4. Select 'Floppy 1' and click 'Browse' and 'Browse local' to find the first floppy image file. Confirm by clicking 'Apply'.
+3. In 'Storage' tab select 'Select or create custom storage' and choose 'Device type' to be 'Floppy device'. Confirm by clicking 'Finish'. ![](pictures/1674587409.png)
+4. Select 'Floppy 1' and click 'Browse' and 'Browse local' to find the first floppy image file. Confirm by clicking 'Apply'. ![](pictures/1674587524.png)
 5. Boot the VM.
-6. Navigate to the contents of the floppy by writing 'a:' and pressing Enter.
+6. Navigate to the contents of the floppy by writing 'a:' and pressing Enter. ![](pictures/1674587611.png)
 7. Run 'install.exe'.
-8. An installation wizard will apear, press any keys (other than Esc) to proceed throuh it.
-9. Select 'Drive C:' as the location to install PenPoint (white background is the one selected).
-10. Press Enter to confirm the root directory to install PenPoint in.
-11. Press Enter to start installation.
-12. After first disk finishes installing a dialog will appear asking to insert next floppy drive. Go to the 'Show virtual hardware details tab' and in 'Floppy 1' set 'Source path' to location of the next disk, and click 'Apply'.
+8. An installation wizard will apear, press any keys (other than Esc) to proceed throuh it. ![](pictures/1674587673.png)
+9. Select 'Drive C:' as the location to install PenPoint (white background is the one selected). ![](pictures/1674587758.png)
+10. Press Enter to confirm the root directory to install PenPoint in. ![](pictures/1674587844.png)
+11. Press Enter to confirm you want to proceed with installation. ![](pictures/1674587946.png)
+12. After first disk finishes installing a dialog will appear asking to insert next floppy drive. Go to the 'Show virtual hardware details tab' and in 'Floppy 1' set 'Source path' to location of the next disk, and click 'Apply'. ![](pictures/1674588125.png) 
 13. Go back to the 'Show graphical console' tab and press any key (other than Esc) to continue installation from the next disk.
 14. Repeat for all 8 disks.
-15. After all 8 disks were installed a dialog about creation of AUTOEXEC.NEW file will appear, press any key to continue.
-16. After pressing keys to continue you will be dropped into command line in 'C:\PENPOINT', type 'cd ..' to go back to root.
+15. After all 8 disks were installed a dialog about creation of AUTOEXEC.NEW file will appear, press any key to continue. ![](pictures/1674588421.png) ![](pictures/1674588486.png) ![](pictures/1674588511.png) ![](pictures/1674588530.png) ![](pictures/1674588543.png)
+16. After pressing keys to continue you will be dropped into command line in 'C:\PENPOINT', type 'cd ..' to go back to root. ![](pictures/1674588566.png)
 17. Using either 'edit' or 'vim' text editors modify file 'FDAUTO.BAT' to include lines from file 'AUTOEXEC.NEW' created by the install wizard
 ```
 PATH=C:\PENPOINT\SDK\UTIL\DOS;%PATH%
@@ -87,13 +87,14 @@ SET LIB=C:\PENPOINT\SDK\LIB
 SET PENPOINT_PATH=C:\PENPOINT
 ```
 Adding ';%PATH' at the end of 'PATH=...' makes so that programs included with FreeDOS can still be used normally.
+![](pictures/1674589427.png)
 
-18. Edit 'FDCONFIG.SYS' so that it looks like this:
+18. Edit 'FDCONFIG.SYS' so that it looks like this: ![](pictures/1674589581.png)
 19. Remove 'AUTOEXEC.NEW' and 'CONFIG.SYS' using `del autoexec.new config.sys`.
 20. Reboot using `reboot`.
 21. Navigate to 'C:\PENPOINT\BOOT' using `cd penpoint\boot`
-22. Open file 'MIL.INI' in text editor and uncomment line containing 'PS2Mouse=on' by deleting the leading '#'.
-23. Navigate to 'C:\PENPOINT\SDK\UTIL\DOS' and run 'GO.BAT'.
+22. Open file 'MIL.INI' in text editor and uncomment line containing 'PS2Mouse=on' by deleting the leading '#'. ![](pictures/1674589997.png)
+23. Navigate to 'C:\PENPOINT\SDK\UTIL\DOS' and run 'GO.BAT'. ![](pictures/1674590085.png)
 
 You now have running PenPoint OS (SDK). To exit PenPoint click 'Settings -> Power -> Manual shutdown'.
 
@@ -113,19 +114,19 @@ $ cd build
 ```
 3. Run the configure script:
 ```
-$ ../configure --target-list=x86_64-softmmu --disable-werror
+$ ../configure --target-list=x86_64-softmmu --enable-modules --disable-werror 
 ```
 If configure script fails you might have some environmental variables like `$CFLAGS` set that interfere with it.  
-4. and run 'ninja' to build:
+4. Run 'ninja' to build:
 ```
 $ ninja
 ```
 5. Use 'virsh' to edit the configuration of the virtual machine so that it uses the freshly built modified QEMU.
 ```
-$ sudo EDITOR=nvim virsh edit --domain PenPointOS
+$ sudo EDITOR=nvim virsh edit --domain QEMU-PenPoint
 ```
 Use any editor you like by setting the `$EDITOR` environmental variable. The argument to `--domain` is the name of the virtual machine.  
-6. Find the '<emulator>' element and change its value to the path of the new binary.
+6. Find the `<emulator>` element and change its value to the path of the new binary.
 ```xml
     <emulator>/home/khnsky/code/penpoint/qemu-penpointos/build/qemu-system-x86_64</emulator>
 ```
