@@ -4,6 +4,8 @@ This is a step-by-step instruction how to create running [PenPoint OS](https://e
 It will use a [modified version of QEMU](https://github.com/khnsky/qemu-penpointos), a [libvirt](https://wiki.archlinux.org/title/Libvirt) client ([virt-manager](https://wiki.archlinux.org/title/Virt-Manager) in my case but any should do), and [FreeDOS](https://www.freedos.org/).  
 In the guide I will be using [Arch Linux](https://archlinux.org/) and be linking to [ArchWiki](https://wiki.archlinux.org/) but it should work similarily for other distributions.
 
+![](pictures/1674649388.png)
+
 # Table of Contents
 - [Creating the VM](#1-creating-the-vm)
 - [Installing PenPoint](#2-installing-penpoint)
@@ -96,7 +98,7 @@ Adding ';%PATH' at the end of 'PATH=...' makes so that programs included with Fr
 22. Open file 'MIL.INI' in text editor and uncomment line containing 'PS2Mouse=on' by deleting the leading '#'. ![](pictures/1674589997.png)
 23. Navigate to 'C:\PENPOINT\SDK\UTIL\DOS' and run 'GO.BAT'. ![](pictures/1674590085.png)
 
-You now have running PenPoint OS (SDK). To exit PenPoint click 'Settings -> Power -> Manual shutdown'.
+You now have running PenPoint OS (SDK). To exit PenPoint click 'Settings -> Power -> Manual shutdown'. ![](pictures/1674649136.png)
 
 # 3. Building modified QEMU
   
@@ -116,11 +118,12 @@ $ cd build
 ```
 $ ../configure --target-list=x86_64-softmmu --enable-modules --disable-werror 
 ```
-If configure script fails you might have some environmental variables like `$CFLAGS` set that interfere with it.  
+If configure script fails you might have some environmental variables like `$CFLAGS` set that interfere with it. ![](pictures/1674648775.png)
 4. Run 'ninja' to build:
 ```
 $ ninja
 ```
+![](pictures/1674648834.png)
 5. Use 'virsh' to edit the configuration of the virtual machine so that it uses the freshly built modified QEMU.
 ```
 $ sudo EDITOR=nvim virsh edit --domain QEMU-PenPoint
