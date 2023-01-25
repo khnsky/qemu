@@ -8,6 +8,8 @@ stylus to navigate PenPoint.
 
 See: [step-by-step installation guide](https://khnsky.github.io/qemu-penpointos/)
 
+![](penpointos.png)
+
 # Building
 To build run:
 ```
