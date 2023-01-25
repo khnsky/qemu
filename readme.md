@@ -35,7 +35,8 @@ $ systemctl start libvirtd.service
 2. From the drop-down menu select 'File -> New Virtual Machine'.  
 3. Select 'Local install media' and click 'Forward'.  ![](pictures/1674499894.png)
 4. Select unzipped FD13LIVE.iso by clicking 'browse' -> 'Browse local'.
-5. Unselect 'Automatically detect from installation media/source', type 'FreeDOS', select 'FreeDOS 1.2' and click 'Forward'.  ![](pictures/1674502792.png)
+5. Unselect 'Automatically detect from installation media/source', type 'FreeDOS', select 'FreeDOS 1.2' and click 'Forward'.  
+![](pictures/1674502792.png)
 6. Set CPUs to 1 and click 'Forward'.  
 ![](pictures/1674502843.png)
 7. Set disk image size to 500MB and click 'Forward'.  
