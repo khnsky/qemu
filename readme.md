@@ -66,7 +66,7 @@ Installation of FreeDOS is now complete, you can use `shutdown` command to power
 
 # 2. Installing PenPoint
   
-1. Download the [floppy images](floppies/) of PenPoint installation media. The files were obtained from [bitsavers.org](http://bitsavers.trailing-edge.com/bits/Go/PENPOINT_SDK/IMD/) and converted from .IMD to .img using [disk-utilities](https://github.com/keirf/disk-utilities).
+1. Download the [floppy images](https://github.com/khnsky/qemu-penpointos/tree/gh-pages/floppies) of PenPoint installation media. The files were obtained from [bitsavers.org](http://bitsavers.trailing-edge.com/bits/Go/PENPOINT_SDK/IMD/) and converted from .IMD to .img using [disk-utilities](https://github.com/keirf/disk-utilities).
 2. In the 'Show virtual hardware details' tab click 'Add hardware'.
 3. In 'Storage' tab select 'Select or create custom storage' and choose 'Device type' to be 'Floppy device'. Confirm by clicking 'Finish'. ![](pictures/1674587409.png)
 4. Select 'Floppy 1' and click 'Browse' and 'Browse local' to find the first floppy image file. Confirm by clicking 'Apply'. ![](pictures/1674587524.png)
